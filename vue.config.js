@@ -36,7 +36,23 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    // before: require('./mock/mock-server.js'), // mock server
+    // 配置代理跨域
+    proxy: {
+      '/dev-api/admin/acl': {
+        target: 'http://39.98.123.211:8170/',
+        pathRewrite: {
+          '^/dev-api/admin/acl': '/admin/acl'
+        }
+      },
+      '/dev-api': {
+        target: 'http://39.98.123.211:8510/',
+        pathRewrite: {
+          '^/dev-api': ''
+        }
+      }
+
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
