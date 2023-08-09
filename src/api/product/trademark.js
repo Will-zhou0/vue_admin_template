@@ -2,6 +2,7 @@ import request from "@/utils/request";
 
 // GET /admin/product/baseTrademark/{page}/{limit}
 // 分别暴露
+// 请求品牌的接口
 export const reqTrademarkList = (page, limit) =>
   request({
     url: `/admin/product/baseTrademark/${page}/${limit} `,
@@ -21,5 +22,14 @@ export const reqAddOrUpdateTrademark = (data) => {
     url: "/admin/product/baseTrademark/save",
     method: "post",
     data,
+  });
+};
+
+// /admin/product/baseTrademark/remove/{id}
+// 删除品牌的接口
+export const reqDeleteTrademark = (id) => {
+  return request({
+    url: `/admin/product/baseTrademark/remove/${id}`,
+    method: "delete",
   });
 };

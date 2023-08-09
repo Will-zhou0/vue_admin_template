@@ -15,6 +15,9 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 引入全局组件
+import CategorySelect from '@/components/CategorySelect'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -38,6 +41,8 @@ Vue.config.productionTip = false
 // 任何组件可以使用api相关接口
 import API from '@/api'
 Vue.prototype.$API = API
+// 使用全局组件
+Vue.component(CategorySelect.name, CategorySelect)
 
 new Vue({
   el: '#app',
