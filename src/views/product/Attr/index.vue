@@ -42,7 +42,7 @@
                 type="warning"
                 size="small"
                 icon="el-icon-edit"
-                @click="isShowTable = false"
+                @click="updateAttr(scope.row)"
               ></el-button>
               <el-button
                 type="danger"
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+// 按需引入lodash中的 深拷贝
+import cloneDeep from 'lodash/cloneDeep'
 export default {
   name: "attr",
   data() {
@@ -160,8 +162,10 @@ export default {
         valueName: "",
       });
     },
-    handleEdit(row) {},
-    handleDelete() {},
+    updateAttr(row){
+      this.isShowTable = false
+      this.attrInfo = cloneDeep(row)
+    },
   },
 };
 </script>
