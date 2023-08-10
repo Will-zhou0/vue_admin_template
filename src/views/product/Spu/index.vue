@@ -7,7 +7,8 @@
       ></CategorySelect>
     </el-card>
     <el-card>
-      <el-button type="primary" icon="el-icon-plus">添加Spu</el-button>
+      <div v-show="scene==0">
+        <el-button type="primary" icon="el-icon-plus" :disabled="!category3Id" @click="addSpu">添加Spu</el-button>
       <el-table :data="records" border style="width: 100%; margin: 20px 0">
         <el-table-column
           label="序号"
@@ -36,6 +37,7 @@
               type="warning"
               icon="el-icon-edit"
               size="mini"
+              @click="updateSpu(scope.row)"
             ></el-button>
             <el-button type="info" icon="el-icon-info" size="mini"></el-button>
             <el-button
@@ -57,13 +59,19 @@
         @size-change="handlePageSizeChange"
         layout="prev, pager, next, jumper, ->, sizes, total"
       ></el-pagination>
+      </div>
+      <SkuForm v-show="scene==1"></SkuForm>
+      <SpuForm v-show="scene==2"></SpuForm>
     </el-card>
   </div>
 </template>
 
 <script>
+import SkuForm from './SkuForm/'
+import SpuForm from './SpuForm'
 export default {
   name: "spu",
+  components:{ SkuForm, SpuForm },
   data() {
     return {
       category1Id: "",
@@ -74,6 +82,7 @@ export default {
       records: [],
       page: 1,
       limit: 3,
+      scene: 0,
     };
   },
   methods: {
@@ -101,6 +110,12 @@ export default {
       console.log(limit);
       this.limit = limit;
       this.getSpuList();
+    },
+    addSpu(){
+      this.scene = 1
+    },
+    updateSpu(row){
+      this.scene = 1
     },
     deleteSpu(row) {},
   },
