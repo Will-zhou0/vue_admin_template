@@ -49,7 +49,7 @@ export const reqAttrInfoList = (category1Id, category2Id, category3Id) => {
     "categoryId": 0,  category3Id
     "categoryLevel": 3,
 } */
-export const reqAddAttr = (data) => {
+export const reqAddOrUpdateAttr = (data) => {
   return request({ 
     url: `/admin/product/saveAttrInfo`,
     method: "post",

@@ -6,6 +6,7 @@
           placeholder="请选择"
           v-model="cForm.category1Id"
           @change="handler1"
+          :disabled="!show"
         >
           <el-option
             :label="c1.name"
@@ -20,6 +21,7 @@
           v-model="cForm.category2Id"
           placeholder="请选择"
           @change="handler2"
+          :disabled="!show"
         >
           <el-option
             :label="c2.name"
@@ -34,6 +36,7 @@
           v-model="cForm.category3Id"
           placeholder="请选择"
           @change="handler3"
+          :disabled="!show"
         >
           <el-option
             :label="c3.name"
@@ -50,6 +53,7 @@
 <script>
 export default {
   name: "CategorySelect",
+  props: ["show"],
   data() {
     return {
       // 一级分类的数据
@@ -88,7 +92,7 @@ export default {
           this.list2 = res.data;
         }
       });
-      this.$emit("getCategoryId",this.cForm);
+      this.$emit("getCategoryId", this.cForm);
     },
     handler2() {
       this.list3 = [];
@@ -99,12 +103,12 @@ export default {
           this.list3 = res.data;
         }
       });
-      this.$emit("getCategoryId",this.cForm);
+      this.$emit("getCategoryId", this.cForm);
     },
     handler3() {
-    //   const { category1Id, category2Id, category3Id } = this.cForm;
-    //   const categoryId = {category1Id, category2Id, category3Id};
-      this.$emit("getCategoryId",this.cForm);
+      //   const { category1Id, category2Id, category3Id } = this.cForm;
+      //   const categoryId = {category1Id, category2Id, category3Id};
+      this.$emit("getCategoryId", this.cForm);
     },
   },
 };
