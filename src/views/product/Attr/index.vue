@@ -119,7 +119,7 @@
           </el-table-column>
         </el-table>
         <el-button type="primary" @click="addOrUpdateAttr" :disabled="attrInfo.attrValueList < 1">保存</el-button>
-        <el-button @click="isShowTable = 'true'">取消</el-button>
+        <el-button @click="isShowTable = true">取消</el-button>
       </div>
     </el-card>
   </div>

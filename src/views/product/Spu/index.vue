@@ -38,6 +38,7 @@
                 type="success"
                 icon="el-icon-plus"
                 size="mini"
+                @click="addSku(scope.row)"
               ></el-button>
               <el-button
                 type="warning"
@@ -50,12 +51,15 @@
                 icon="el-icon-info"
                 size="mini"
               ></el-button>
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                size="mini"
-                @click="deleteSpu(scope.row)"
-              ></el-button>
+              <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteSpu(scope.row)">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="mini"
+                  slot="reference"
+                >
+                </el-button>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -70,8 +74,12 @@
           layout="prev, pager, next, jumper, ->, sizes, total"
         ></el-pagination>
       </div>
-      <SpuForm v-show="scene == 1" @changeScene="changeScene" ref="spu"></SpuForm>
-      <SkuForm v-show="scene == 2"></SkuForm>
+      <SpuForm
+        v-show="scene == 1"
+        @changeScene="changeScene"
+        ref="spu"
+      ></SpuForm>
+      <SkuForm v-show="scene == 2" ref="sku"></SkuForm>
     </el-card>
   </div>
 </template>
@@ -121,16 +129,38 @@ export default {
     },
     addSpu() {
       this.scene = 1;
+      this.$refs.spu.addSpuData(this.category3Id);
+    },
+    addSku(row) {
+      this.scene = 2;
+      console.log(row);
+      this.$refs.sku.getData(this.category1Id, this.category2Id, row);
     },
     updateSpu(row) {
       this.scene = 1;
       this.$refs.spu.initSpuData(row);
     },
-    deleteSpu(row) {},
+    deleteSpu(row) {
+      console.log(row);
+      this.$API.spu.reqDeleteSpu(row.id).then((res) => {
+        if (res.code === 200) {
+          this.$message({
+            type: "success",
+            message: "删除成功",
+          });
+          this.getSpuList(this.records.length>1?this.page:this.page-1);
+        }
+      });
+    },
     // 自定义事件，切换场景
-    changeScene() {
-      this.scene = 0;
-    }
+    changeScene({ scene, flag }) {
+      this.scene = scene;
+      if (flag === "修改") {
+        this.getSpuList(this.page);
+      } else {
+        this.getSpuList();
+      }
+    },
   },
 };
 </script>

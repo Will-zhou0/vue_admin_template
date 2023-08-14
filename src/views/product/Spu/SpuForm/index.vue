@@ -78,7 +78,7 @@
                 :key="index"
                 closable
                 :disable-transitions="false"
-                @close="scope.row.spuSaleAttrValueList.splice(index, 1);"
+                @close="scope.row.spuSaleAttrValueList.splice(index, 1)"
               >
                 {{ saleAttrValue.saleAttrValueName }}
               </el-tag>
@@ -107,15 +107,15 @@
                 type="danger"
                 size="small"
                 icon="el-icon-delete"
-                @click="spu.spuSaleAttrList.splice(scope.$index,1)"
+                @click="spu.spuSaleAttrList.splice(scope.$index, 1)"
               ></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-form-item>
       <el-form-item label="">
-        <el-button type="primary">保存</el-button>
-        <el-button type="warning" @click="$emit('changeScene')">取消</el-button>
+        <el-button type="primary" @click="addOrUpdateSpu">保存</el-button>
+        <el-button type="warning" @click="cancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -130,7 +130,7 @@ export default {
         category3Id: 0,
         description: "",
         spuName: "",
-        tmId: 0,
+        tmId: "",
         spuImageList: [
           {
             imgName: "",
@@ -259,8 +259,8 @@ export default {
     },
     // 删除销售属性
     deleteSaleAttr(row) {
-    //   console.log(row.baseSaleAttrId);
-    //   console.log(row.baseSaleAttrId);
+      //   console.log(row.baseSaleAttrId);
+      //   console.log(row.baseSaleAttrId);
       this.spu.spuSaleAttrList.forEach((item) => {
         if (item.baseSaleAttrId === row.baseSaleAttrId) {
           this.spu.spuSaleAttrList.splice(
@@ -269,6 +269,47 @@ export default {
           );
         }
       });
+    },
+    addOrUpdateSpu() {
+      console.log(1111);
+      this.spu.spuImageList = this.spuImageList.map((item) => {
+        return {
+          imgName: item.name,
+          imgUrl: (item.response && item.response.data) || item.imgUrl,
+        };
+      });
+      this.$API.spu.reqAddOrUpdateSpu(this.spu).then((res) => {
+        if (res.code === 200) {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+          });
+          this.$emit("changeScene", {
+            scene: 0,
+            flag: this.spu.id ? "修改" : "添加",
+          });
+        }
+      });
+      // 清空数据
+      Object.assign(this._data, this.$options.data());
+    },
+    addSpuData(category3Id) {
+      this.spu.category3Id = category3Id;
+      this.$API.spu.reqTrademarkList().then((res) => {
+        if (res.code === 200) {
+          this.trademarkList = res.data;
+        }
+      });
+      this.$API.spu.reqBaseSaleAttrList().then((res) => {
+        if (res.code === 200) {
+          this.baseSaleAttrList = res.data;
+        }
+      });
+    },
+    cancel() {
+      this.$emit("changeScene", { scene: 0, flag: "" });
+      // 清空数据
+      Object.assign(this._data, this.$options.data());
     },
   },
 };

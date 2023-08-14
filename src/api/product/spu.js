@@ -1,52 +1,52 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 // 获取spu列表
 // GET /admin/product/{page}/{limit}
 export const reqSpuList = (page, limit, category3Id) => {
   return request({
     url: `/admin/product/${page}/${limit}`,
-    method: 'get',
+    method: "get",
     params: {
-      category3Id
-    }
-  })
-}
+      category3Id,
+    },
+  });
+};
 
 // 获取spu详细信息
 // GET /admin/product/getSpuById/{spuId}
 export const reqSpu = (spuId) => {
   return request({
     url: `/admin/product/getSpuById/${spuId}`,
-    method: 'get'
-  })
-}
+    method: "get",
+  });
+};
 
 // 获取品牌列表
 // GET /admin/product/baseTrademark/getTrademarkList
 export const reqTrademarkList = () => {
   return request({
     url: `/admin/product/baseTrademark/getTrademarkList`,
-    method: 'get'
-  })
-}
+    method: "get",
+  });
+};
 
 // 获取spu图片的接口
 // GET /admin/product/spuImageList/{spuId}
 export const reqSpuImageList = (spuId) => {
   return request({
     url: `/admin/product/spuImageList/${spuId}`,
-    method: 'get'
-  })
-}
+    method: "get",
+  });
+};
 
 // 获取平台全部销售属性 销售属性最多三个
 // GET /admin/product/baseSaleAttrList
 export const reqBaseSaleAttrList = () => {
   return request({
     url: `/admin/product/baseSaleAttrList`,
-    method: 'get'
-  })
-}
+    method: "get",
+  });
+};
 
 /* {
   "category3Id": 0,
@@ -83,10 +83,28 @@ export const reqBaseSaleAttrList = () => {
 } */
 // 保存spu
 // POST /admin/product/saveSpuInfo
-export const reqSaveSpuInfo = (spu) => {
+// POST /admin/product/updateSpuInfo
+export const reqAddOrUpdateSpu = (spu) => {
+  if (spu.id) {
+    return request({
+      url: `/admin/product/updateSpuInfo`,
+      method: "post",
+      data: spu,
+    });
+  } else {
+    return request({
+      url: `/admin/product/saveSpuInfo`,
+      method: "post",
+      data: spu,
+    });
+  }
+};
+
+// 删除spu
+// DELETE /admin/product/deleteSpu/{spuId}
+export const reqDeleteSpu = (spuId) => {
   return request({
-    url: `/admin/product/saveSpuInfo`,
-    method: 'post',
-    data: spu
-  })
-}
+    url: `/admin/product/deleteSpu/${spuId}`,
+    method: "delete",
+  });
+};
