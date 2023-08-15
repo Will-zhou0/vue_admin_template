@@ -50,8 +50,13 @@
                 type="info"
                 icon="el-icon-info"
                 size="mini"
+                title="查看当前spu对应的所有sku列表"
+                @click="getSku(scope.row)"
               ></el-button>
-              <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteSpu(scope.row)">
+              <el-popconfirm
+                title="这是一段内容确定删除吗？"
+                @onConfirm="deleteSpu(scope.row)"
+              >
                 <el-button
                   type="danger"
                   icon="el-icon-delete"
@@ -79,8 +84,30 @@
         @changeScene="changeScene"
         ref="spu"
       ></SpuForm>
-      <SkuForm v-show="scene == 2" ref="sku"></SkuForm>
+      <SkuForm
+        v-show="scene == 2"
+        ref="sku"
+        @changeScenes="changeScenes"
+      ></SkuForm>
     </el-card>
+    <el-dialog :title="`${spu.spuName}的sku列表`" :visible.sync="dialogTableVisible">
+      <el-table :data="skuList" style="width: 100%;">
+        <el-table-column
+          label="名称"
+          prop="skuName"
+        ></el-table-column>
+        <el-table-column
+          label="价格"
+          prop="price"
+        ></el-table-column>
+        <el-table-column prop="weight" label="重量"></el-table-column>
+        <el-table-column label="默认图片">
+          <template slot-scope="scope">
+            <img :src="scope.row.skuDefaultImg" style="width: 80px; height: 80px;" />
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -101,6 +128,9 @@ export default {
       page: 1,
       limit: 3,
       scene: 0,
+      dialogTableVisible: false,
+      spu: {},
+      skuList: [],
     };
   },
   methods: {
@@ -136,6 +166,17 @@ export default {
       console.log(row);
       this.$refs.sku.getData(this.category1Id, this.category2Id, row);
     },
+    getSku(spu) {
+      this.dialogTableVisible = true;
+      // 保存spu
+      this.spu = spu;
+      // 获取sku列表
+      this.$API.sku.reqSkuList(spu.id).then((res) => {
+        if (res.code === 200) {
+          this.skuList = res.data;
+        }
+      });
+    },
     updateSpu(row) {
       this.scene = 1;
       this.$refs.spu.initSpuData(row);
@@ -148,7 +189,7 @@ export default {
             type: "success",
             message: "删除成功",
           });
-          this.getSpuList(this.records.length>1?this.page:this.page-1);
+          this.getSpuList(this.records.length > 1 ? this.page : this.page - 1);
         }
       });
     },
@@ -160,6 +201,9 @@ export default {
       } else {
         this.getSpuList();
       }
+    },
+    changeScenes(scene) {
+      this.scene = scene;
     },
   },
 };

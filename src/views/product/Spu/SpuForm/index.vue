@@ -271,7 +271,6 @@ export default {
       });
     },
     addOrUpdateSpu() {
-      console.log(1111);
       this.spu.spuImageList = this.spuImageList.map((item) => {
         return {
           imgName: item.name,
@@ -309,7 +308,7 @@ export default {
     cancel() {
       this.$emit("changeScene", { scene: 0, flag: "" });
       // 清空数据
-      Object.assign(this._data, this.$options.data());
+      // Object.assign(this._data, this.$options.data());
     },
   },
 };

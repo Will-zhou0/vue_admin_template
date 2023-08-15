@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card style="margin: 10px 0">
-      <CategorySelect @getCategoryId="getCategoryId" :show="isShowTable"></CategorySelect>
+      <CategorySelect @getCategoryId="getCategoryId" :show="isShowTable" ></CategorySelect>
     </el-card>
     <el-card>
       <div v-show="isShowTable">
