@@ -75,10 +75,10 @@
       :before-close="handleClose"
       size="50%"
     >
-    <el-row>
-  <el-col :span="5">标题</el-col>
-  <el-col :span="7">标题1111</el-col>
-</el-row>
+      <el-row>
+        <el-col :span="5">标题</el-col>
+        <el-col :span="16">标题1111</el-col>
+      </el-row>
     </el-drawer>
     <el-pagination
       style="text-align: center"
