@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 获取sku列表
+// 获取spu图片列表
 // GET /admin/product/spuImageList/{spuId}
 export const reqSpuImageList = (skuId) => {
   return request({
@@ -98,6 +98,40 @@ export const reqSaveSkuInfo = (skuInfo) => {
 export const reqSkuList = (spuId) => {
   return request({
     url: `/admin/product/findBySpuId/${spuId}`,
+    method: 'get'
+  })
+}
+
+// 获取sku列表
+// GET /admin/product/list/{page}/{limit}
+export const reqSkuListPage = (page, limit) => {
+  return request({
+    url: `/admin/product/list/${page}/${limit}`,
+    method: 'get'
+  })
+}
+
+// 商品下架
+// GET /admin/product/cancelSale/{skuId}
+export const reqCancelSale = (skuId) => {
+  return request({
+    url: `/admin/product/cancelSale/${skuId}`,
+    method: 'get'
+  })
+}
+// 商品上架
+// GET /admin/product/onSale/{skuId}
+export const reqOnSale = (skuId) => {
+  return request({
+    url: `/admin/product/onSale/${skuId}`,
+    method: 'get'
+  })
+}
+// 获取sku信息
+// GET /admin/product/getSkuById/{skuId}
+export const reqSkuInfos = (skuId) => { 
+  return request({
+    url: `/admin/product/getSkuById/${skuId}`,
     method: 'get'
   })
 }

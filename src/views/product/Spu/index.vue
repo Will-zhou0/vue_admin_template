@@ -90,8 +90,8 @@
         @changeScenes="changeScenes"
       ></SkuForm>
     </el-card>
-    <el-dialog :title="`${spu.spuName}的sku列表`" :visible.sync="dialogTableVisible">
-      <el-table :data="skuList" style="width: 100%;">
+    <el-dialog :title="`${spu.spuName}的sku列表`" :visible.sync="dialogTableVisible" @closed="closeDialog">
+      <el-table :data="skuList" style="width: 100%;" v-loading="loading">
         <el-table-column
           label="名称"
           prop="skuName"
@@ -112,6 +112,7 @@
 </template>
 
 <script>
+import { Loading } from "element-ui";
 import SkuForm from "./SkuForm/";
 import SpuForm from "./SpuForm";
 export default {
@@ -131,6 +132,7 @@ export default {
       dialogTableVisible: false,
       spu: {},
       skuList: [],
+      loading: true,
     };
   },
   methods: {
@@ -174,6 +176,7 @@ export default {
       this.$API.sku.reqSkuList(spu.id).then((res) => {
         if (res.code === 200) {
           this.skuList = res.data;
+          this.loading = false;
         }
       });
     },
@@ -205,6 +208,11 @@ export default {
     changeScenes(scene) {
       this.scene = scene;
     },
+    // 关闭对话框
+    closeDialog() {
+      this.loading = true;
+      this.skuList = [];
+    }
   },
 };
 </script>
