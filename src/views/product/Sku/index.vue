@@ -68,7 +68,6 @@
       </el-table-column>
     </el-table>
     <el-drawer
-      title="我是标题"
       :visible.sync="drawer"
       direction="rtl"
       :show-close="false"
@@ -76,8 +75,38 @@
       size="50%"
     >
       <el-row>
-        <el-col :span="5">标题</el-col>
-        <el-col :span="16">标题1111</el-col>
+        <el-col :span="5">名称</el-col>
+        <el-col :span="16">{{ skuInfo.skuName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="5">描述</el-col>
+        <el-col :span="16">{{ skuInfo.skuDesc }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="5">价格</el-col>
+        <el-col :span="16">{{ skuInfo.price }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="5">平台属性</el-col>
+        <el-col :span="16">
+          <el-tag
+            v-for="(item, index) in skuInfo.skuAttrValueList"
+            :key="index"
+            type="sucess"
+            style="margin-right: 10px"
+            >{{ item.attrName }}:{{ item.valueName }}</el-tag
+          >
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="5">商品图片</el-col>
+        <el-col :span="16">
+          <el-carousel height="350px">
+            <el-carousel-item v-for="(item,index) in skuInfo.skuImageList" :key="index">
+              <img :src="item.imgUrl" style="width: 100%; height: 100%;">
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
       </el-row>
     </el-drawer>
     <el-pagination
@@ -189,4 +218,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.el-row .el-col-5 {
+  font-size: 18px;
+  text-align: right;
+}
+.el-col {
+  margin: 10px;
+}
+/* 样式穿透（父组件中的样式影响到子组件）
+  原生css >>>
+  scss ::v-deep
+  less /deep/
+  */
+>>>.el-carousel__button {
+  background: #000;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+</style>
