@@ -46,7 +46,7 @@
               </span>
             </template>
             <template slot="footer">
-                <span>日销售额 ￥12345</span>
+              <span>日销售额 ￥12345</span>
             </template>
           </Detail>
         </el-card>
@@ -55,10 +55,10 @@
         <el-card>
           <Detail title="访问量" count="88460">
             <template slot="charts">
-                
+              <LineChart></LineChart>
             </template>
             <template slot="footer">
-                <span>日访问量 12345</span>
+              <span>日访问量 12345</span>
             </template>
           </Detail>
         </el-card>
@@ -66,8 +66,11 @@
       <el-col :span="6">
         <el-card>
           <Detail title="支付笔数" count="88460">
+            <template slot="charts">
+              <Bar></Bar>
+            </template>
             <template slot="footer">
-                <span>转化率 65%</span>
+              <span>转化率 65%</span>
             </template>
           </Detail>
         </el-card>
@@ -75,6 +78,9 @@
       <el-col :span="6">
         <el-card>
           <Detail title="运营活动效果" count="79%">
+            <template slot="charts">
+              <ProgressBar></ProgressBar>
+            </template>
             <template slot="footer">
               <span
                 >周同比&nbsp;&nbsp;56.44%&nbsp;
@@ -125,12 +131,18 @@
 
 <script>
 import Detail from "./detail";
+import LineChart from "./charts/lineChart.vue";
+import Bar from "./charts/bar.vue";
+import ProgressBar from "./charts/progressBar.vue";
 export default {
   name: "card",
   components: {
     Detail,
+    LineChart,
+    Bar,
+    ProgressBar,
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>
