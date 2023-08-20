@@ -2,6 +2,7 @@
   <div class="dashboard-container">
     <Card></Card>
     <Sale></Sale>
+    <Bottom></Bottom>
   </div>
 </template>
 
@@ -9,11 +10,12 @@
 import { mapGetters } from 'vuex'
 import Card from './card'
 import Sale from './sale'
+import Bottom from './bottom'
 
 export default {
   name: 'Dashboard',
   components: {
-    Card,Sale
+    Card,Sale,Bottom
   },
   computed: {
     ...mapGetters([
